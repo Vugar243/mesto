@@ -4,11 +4,13 @@ let closeButton = document.querySelector('.popup__close-button');
 let form = document.querySelector('.popup__container');
 let infoTitle = document.querySelector('.profile-info__title');
 let infoSubtitle = document.querySelector('.profile-info__subtitle');
-let inputName = document.querySelector('.popup__input_name');
-let inputDescription = document.querySelector('.popup__input_description');
+let inputName = document.querySelector('.popup__input_type_name');
+let inputDescription = document.querySelector('.popup__input_type_description');
 let saveButton = document.querySelector('.popup__save-button');
 function openPopup() {
   popup.classList.add('popup_opened');
+  inputName.value = infoTitle.textContent;
+  inputDescription.value = infoSubtitle.textContent;
 }
 editButton.addEventListener('click', openPopup);
 function closePopup() {

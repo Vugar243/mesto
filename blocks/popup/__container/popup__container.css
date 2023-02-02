@@ -1,6 +1,6 @@
 .popup__container {
   position: fixed;
-  top: calc(50% - 281px);
+  top: calc(50% - 164px);
   left: calc(50% - 215px);
   display: flex;
   flex-direction: column;
@@ -13,7 +13,7 @@
 }
 @media screen and (max-width: 556px) {
   .popup__container {
-    top: calc(50% - 353px);
+    top: calc(50% - 164px);
     left: calc(50% - 141px);
     padding: 25px 22px;
     width: 238px;
