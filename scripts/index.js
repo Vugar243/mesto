@@ -61,12 +61,18 @@ function handleFormSumbitEditProfile(evt) {
 }
 profileForm.addEventListener("submit", handleFormSumbitEditProfile);
 // редактирование профиля 
+function closePopupImage () {
+  closePopup(popupImage);
+}
+popupImageClose.addEventListener('click', closePopupImage);
+//закрытие popup фото
 function AddingCard(element) {
   const cardTemplate = document.querySelector('.element-template').content;
   const directorElement = cardTemplate.cloneNode(true);
   
   directorElement.querySelector('.element__title').textContent = element.name;
   directorElement.querySelector('.element__image').src = element.link;
+  directorElement.querySelector('.element__image').alt = element.alt;
   
   directorElement.querySelector('.element__like-button').addEventListener('click', function (evt) {
     evt.target.classList.toggle('element__like-button_active');
@@ -86,10 +92,7 @@ function AddingCard(element) {
     popupImageImage.src = element.link;
   }
   elementImage.addEventListener('click', openPopupImage);
-  function closePopupImage () {
-    closePopup(popupImage);
-  }
-  popupImageClose.addEventListener('click', closePopupImage);
+  
 
   elementsList.append(directorElement);
 }
