@@ -1,4 +1,4 @@
-.popup-image__title {
+.popup__image-title {
   position: fixed;
   top: calc(50% + 279.5px);
   left: calc(50% - 400px);
@@ -10,7 +10,7 @@
   margin: 0;
 }
 @media screen and (max-width: 931px) {
-  .popup-image__title {
+  .popup__image-title {
     width: 240px;
     height: 299px;
     top: calc(50% - -159px);

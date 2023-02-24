@@ -1,4 +1,4 @@
-.popup-image__image {
+.popup__image-image {
   position: fixed;
   top: calc(50% - 266.5px);
   left: calc(50% - 400px);
@@ -9,7 +9,7 @@
   object-fit: cover;
 }
 @media screen and (max-width: 931px) {
-  .popup-image__image {
+  .popup__image-image {
     width: 240px;
     height: 299px;
     top: calc(50% - 149px);
