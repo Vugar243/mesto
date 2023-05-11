@@ -20,6 +20,7 @@ const popupImageClose = document.querySelector('.popup__image-close-button');
 const popupImageImage = document.querySelector('.popup__image-image');
 const popupImageTitle = document.querySelector('.popup__image-title');
 const elementImage = document.querySelector('.element__image');
+const body = document.querySelector('.body');
 function openPopup (popup) {
   popup.classList.add('popup_opened');
 }
@@ -31,7 +32,7 @@ function closePopup (popup) {
 function openPopupEditProfile() {
   inputName.value = infoTitle.textContent;
   inputDescription.value = infoSubtitle.textContent;
-  openPopup(editProfile)
+  openPopup(editProfile);
 }
 editButton.addEventListener('click', openPopupEditProfile);
 // открытие popup редактирования 
@@ -63,7 +64,6 @@ function closePopupImage () {
 }
 popupImageClose.addEventListener('click', closePopupImage);
 //закрытие popup фото
-
 function createCard(element) {
   const cardTemplate = document.querySelector('.element-template').content;
   const directorElement = cardTemplate.cloneNode(true);
@@ -92,11 +92,11 @@ function createCard(element) {
   elementImage.addEventListener('click', openPopupImage);
   return directorElement
 }
-//функция добоваления карточек
+//функция создания карточки
 initialCards.forEach(function (element) {
   elementsList.append(createCard(element));
 });
-
+//функция добавления карточек из масива
 function handleFormSumbitAddingCard(evt) {
   evt.preventDefault();
   const inputTitle = document.querySelector('.popup__input_type_title').value;
@@ -106,3 +106,34 @@ function handleFormSumbitAddingCard(evt) {
   closePopup(addingCard);
 }
 cardForm.addEventListener("submit", handleFormSumbitAddingCard);
+//функция добоваления карточек
+function keyHandler(evt) {
+  if (evt.key === 'Escape') {
+    closePopupEditProfile();
+    closePopupAddingCard();
+    closePopupImage ();
+  }
+}
+body.addEventListener('keydown', keyHandler);
+//Закрытие попапа нажатием на Esc 
+
+editProfile.addEventListener('click', function (event) {
+  if (event !== body ) {
+ closePopupEditProfile();
+}
+});
+//Закрытие попапа кликом на оверлей
+//document.addEventListener(click, ()=> {
+ // addingCard.includes(addingCard);
+ // if ( !clic ){
+ //   closePopupAddingCard();
+//  }
+//})
+//addingCard.addEventListener('click', function () {
+  //closePopupAddingCard();
+//});
+//Закрытие попапа кликом на оверлей
+//popupImage.addEventListener('click', function () {
+  //closePopupImage ();
+//});
+//Закрытие попапа кликом на оверлей
