@@ -29,6 +29,7 @@ function openPopup (popup) {
 //открытие popup
 function closePopup (popup) {
    popup.classList.remove('popup_opened');
+   enableValidation();
 }
 //закрытие popup
 function openPopupEditProfile() {
