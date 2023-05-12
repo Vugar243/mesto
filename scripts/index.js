@@ -21,8 +21,10 @@ const popupImageImage = document.querySelector('.popup__image-image');
 const popupImageTitle = document.querySelector('.popup__image-title');
 const elementImage = document.querySelector('.element__image');
 const body = document.querySelector('.body');
+const popup = document.querySelectorAll('.popup');
 function openPopup (popup) {
   popup.classList.add('popup_opened');
+  enableValidation();
 }
 //открытие popup
 function closePopup (popup) {
@@ -109,31 +111,17 @@ cardForm.addEventListener("submit", handleFormSumbitAddingCard);
 //функция добоваления карточек
 function keyHandler(evt) {
   if (evt.key === 'Escape') {
-    closePopupEditProfile();
-    closePopupAddingCard();
-    closePopupImage ();
+    closePopup(editProfile);
+    closePopup(addingCard);
+    closePopup(popupImage);
   }
 }
 body.addEventListener('keydown', keyHandler);
 //Закрытие попапа нажатием на Esc 
-
-editProfile.addEventListener('click', function (event) {
-  if (event !== body ) {
- closePopupEditProfile();
-}
-});
-//Закрытие попапа кликом на оверлей
-//document.addEventListener(click, ()=> {
- // addingCard.includes(addingCard);
- // if ( !clic ){
- //   closePopupAddingCard();
-//  }
-//})
-//addingCard.addEventListener('click', function () {
-  //closePopupAddingCard();
-//});
-//Закрытие попапа кликом на оверлей
-//popupImage.addEventListener('click', function () {
-  //closePopupImage ();
-//});
+body.addEventListener('click', function (evt) {
+  popup.forEach(function (popup) {
+    if (evt.target.classList.contains('popup') ) {
+      closePopup(popup);
+      }
+  })});
 //Закрытие попапа кликом на оверлей

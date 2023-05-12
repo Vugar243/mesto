@@ -47,11 +47,11 @@
       <button type="button" class="popup__close-button"></button>
       <form class="popup__form popup__form_profile-form" name="profile-form" novalidate>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input id="inputElement-error" class="popup__input popup__input_type_name" type="text" name="name" placeholder="Введите имя" minlength="2" maxlength="40" required>
-        <span id="inputElement1-error" class="popup__input-error">Вы пропустили это поле.</span>
-        <input class="popup__input popup__input_type_description" type="text" name="description" placeholder="Введите род деятельности" minlength="2" maxlength="200" required>
-        <span class="popup__input-error">Вы пропустили это поле.</span>
-        <button type="submit" class="popup__save-button">Сохранить</button>
+        <input id="name-input" class="popup__input popup__input_type_name" type="text" name="name" placeholder="Введите имя" minlength="2" maxlength="40" required>
+        <span class="popup__input-error name-input-error"></span>
+        <input id="job-input" class="popup__input popup__input_type_description" type="text" name="description" placeholder="Введите род деятельности" minlength="2" maxlength="200" required>
+        <span class="popup__input-error job-input-error"></span>
+        <button type="submit" class="popup__save-button form__submit">Сохранить</button>
       </form>
     </div>
   </div>
@@ -60,11 +60,11 @@
       <button type="button" class="popup__close-button popup__close-button_adding-card"></button>
       <form class="popup__form popup__form_card-form" name="card-form" novalidate>
         <h2 class="popup__title">Новое место</h2>
-        <input class="popup__input popup__input_type_title" type="text" name="Title" placeholder="Название" minlength="2" maxlength="30" required>
-        <span class="popup__input-error">ллр</span>
-        <input class="popup__input popup__input_type_link" type="url" name="Link to the picture" placeholder="Ссылка на картинку" required>
-        <span class="popup__input-error">ллр</span>
-        <button type="submit" class="popup__save-button">Создать</button>
+        <input id="photo-input" class="popup__input popup__input_type_title" type="text" name="Title" placeholder="Название" minlength="2" maxlength="30" required>
+        <span class="popup__input-error photo-input-error"></span>
+        <input id="link-input" class="popup__input popup__input_type_link" type="url" name="Link to the picture" placeholder="Ссылка на картинку" required>
+        <span class="popup__input-error link-input-error"></span>
+        <button type="submit" class="popup__save-button form__submit">Создать</button>
       </form>
     </div>
   </div>
@@ -73,8 +73,8 @@
     <img class="popup__image-image" src=" " alt=" ">
     <h2 class="popup__image-title"></h2>
   </div>
+  <script src="./scripts/validate.js"></script>
   <script src="./scripts/cards.js"></script>
   <script src="./scripts/index.js"></script>
-  <script src="./scripts/validate.js"></script>
 </body>
 </html>
