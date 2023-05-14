@@ -51,7 +51,7 @@
         <span class="popup__input-error name-input-error"></span>
         <input id="job-input" class="popup__input popup__input_type_description" type="text" name="description" placeholder="Введите род деятельности" minlength="2" maxlength="200" required>
         <span class="popup__input-error job-input-error"></span>
-        <button type="submit" class="popup__save-button popup__form-submit">Сохранить</button>
+        <button disabled type="submit" class="popup__save-button popup__form-submit">Сохранить</button>
       </form>
     </div>
   </div>
@@ -64,12 +64,12 @@
         <span class="popup__input-error photo-input-error"></span>
         <input id="link-input" class="popup__input popup__input_type_link" type="url" name="Link to the picture" placeholder="Ссылка на картинку" required>
         <span class="popup__input-error link-input-error"></span>
-        <button type="submit" class="popup__save-button popup__form-submit">Создать</button>
+        <button disabled type="submit" class="popup__save-button popup__form-submit popup__save-button-submit">Создать</button>
       </form>
     </div>
   </div>
   <div class="popup popup-image">
-    <button type="button" class="popup__image-close-button"></button>
+    <button type="button" class="popup__close-button popup__image-close-button"></button>
     <img class="popup__image-image" src=" " alt=" ">
     <h2 class="popup__image-title"></h2>
   </div>
