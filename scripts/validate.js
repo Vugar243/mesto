@@ -32,17 +32,17 @@ const setEventListeners = (formElement, enableValidation) => {
     });
   });
 };
-const enableValidation = (enableValidation) => {
-  const formList = Array.from(document.querySelectorAll(enableValidation.formSelector));
+
+const enableValidation = (settings) => {
+  const formList = Array.from(document.querySelectorAll(settings.formSelector));
   formList.forEach((formElement) => {
-    formElement.addEventListener('submit', function (evt) {
-      evt.preventDefault();
-    });
-    setEventListeners(formElement, enableValidation);
+  formElement.addEventListener('submit', function (evt) {
+  evt.preventDefault();
   });
-};
-
-
+  setEventListeners(formElement, settings);
+  });
+  };
+  
 function hasInvalidInput (inputList){
   return inputList.some((inputElement) => {
   return !inputElement.validity.valid;
