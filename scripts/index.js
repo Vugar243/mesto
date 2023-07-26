@@ -1,4 +1,4 @@
-import { initialCards, Card } from './Card.js';
+import { initialCards, Card } from './card.js';
 import { FormValidator } from './formValidator.js';
 const editButton = document.querySelector('.profile-info__edit-button');
 const infoTitle = document.querySelector('.profile-info__title');
