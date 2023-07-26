@@ -1,6 +1,7 @@
 import { Card } from './card.js';
 import { initialCards } from './cards.js';
 import { FormValidator } from './formValidator.js';
+import { openPopup, closePopup } from './utils.js';
 const editButton = document.querySelector('.profile-info__edit-button');
 const infoTitle = document.querySelector('.profile-info__title');
 const infoSubtitle = document.querySelector('.profile-info__subtitle');
@@ -15,23 +16,6 @@ const cardForm = document.querySelector('.popup__form_card-form');
 const popups = document.querySelectorAll('.popup');
 const inputTitle = document.querySelector('.popup__input_type_title');
 const inputLink = document.querySelector('.popup__input_type_link');
-export function openPopup (popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', closeByEscape);
-}
-//открытие popup
-function closePopup (popup) {
-   popup.classList.remove('popup_opened');
-   document.removeEventListener('keydown', closeByEscape); 
-}
-//закрытие popup
-function closeByEscape(evt) {
-  if (evt.key === 'Escape') {
-    const openedPopup = document.querySelector('.popup_opened');
-    closePopup (openedPopup);
-  }
-};
-//закрытие popup
 function openPopupEditProfile() {
   inputName.value = infoTitle.textContent;
   inputDescription.value = infoSubtitle.textContent;
