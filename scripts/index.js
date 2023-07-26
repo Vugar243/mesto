@@ -1,4 +1,4 @@
-import { Card } from './Card.js';
+import { Card } from './card.js';
 import { initialCards } from './cards.js';
 import { FormValidator } from './formValidator.js';
 const editButton = document.querySelector('.profile-info__edit-button');
@@ -12,9 +12,6 @@ const editProfile = document.querySelector('.popup_edit-profile');
 const elementsList = document.querySelector('.elements');
 const profileForm = document.querySelector('.popup__form_profile-form');
 const cardForm = document.querySelector('.popup__form_card-form');
-export const popupImage = document.querySelector('.popup-image');
-export const popupImageImage = document.querySelector('.popup__image-image');
-export const popupImageTitle = document.querySelector('.popup__image-title');
 const popups = document.querySelectorAll('.popup');
 const inputTitle = document.querySelector('.popup__input_type_title');
 const inputLink = document.querySelector('.popup__input_type_link');
