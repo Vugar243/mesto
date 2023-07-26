@@ -11,8 +11,6 @@
 }
 @media screen and (max-width: 931px) {
   .popup__image-title {
-    width: 240px;
-    height: 299px;
     top: calc(50% - -159px);
     left: calc(50% - 120px);
   }
