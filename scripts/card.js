@@ -1,32 +1,34 @@
 import { popupImage, popupImageImage, popupImageTitle, openPopup } from './utils.js';
 export class Card {
-  constructor(name, link, alt) {
-    this._name = name;
-    this._link = link;
-    this._alt = alt;
+  constructor(data, templateSelector) {
+    this._name = data.name;
+    this._link = data.link;
+    this._alt = data.alt;
+    this._templateSelector = templateSelector;
+    this._element = this._getTemplate();
+
+    this._elementImage = this._element.querySelector('.element__image');
+    this._elementTitle = this._element.querySelector('.element__title');
+    this._likeButton = this._element.querySelector('.element__like-button');
+    this._deleteButton = this._element.querySelector('.element__delete');
+    
+    // Привязываем обработчики к текущему экземпляру класса
+    this._handleLike = () => this._toggleLike();
+    this._handleDelete = () => this._removeCard();
+    this._handleImageClick = () => this._openPopupImage();
   }
-  
+
   _getTemplate() {
     const cardElement = document.querySelector('.element-template').content.querySelector('.element').cloneNode(true);
     return cardElement;
   }
 
-  _handleLike() {
-    this._element.querySelector('.element__like-button').addEventListener('click', () => {
-      this._element.querySelector('.element__like-button').classList.toggle('element__like-button_active');
-    });
+  _toggleLike() {
+    this._likeButton.classList.toggle('element__like-button_active');
   }
 
-  _handleDelete() {
-    this._element.querySelector('.element__delete').addEventListener('click', () => {
-      this._element.remove();
-    });
-  }
-
-  _handleImageClick() {
-    this._element.querySelector('.element__image').addEventListener('click', () => {
-      this._openPopupImage();
-    });
+  _removeCard() {
+    this._element.remove();
   }
 
   _openPopupImage() {
@@ -37,18 +39,20 @@ export class Card {
     popupImageImage.alt = this._alt;
   }
 
-  generateCard() {
-    this._element = this._getTemplate();
+  _setEventListeners() {
+    this._likeButton.addEventListener('click', this._handleLike);
+    this._deleteButton.addEventListener('click', this._handleDelete);
+    this._elementImage.addEventListener('click', this._handleImageClick);
+  }
 
-    this._element.querySelector('.element__title').textContent = this._name;
-    this._element.querySelector('.element__image').src = this._link;
-    this._element.querySelector('.element__image').alt = this._alt;
+  createCard() {
+    this._elementTitle.textContent = this._name;
+    this._elementImage.src = this._link;
+    this._elementImage.alt = this._alt;
 
-    this._handleLike();
-    this._handleDelete();
-    this._handleImageClick();
-
-    // Вернём элемент наружу
+    this._setEventListeners();
+    
+// Вернём элемент наружу
     return this._element;
   }
 }

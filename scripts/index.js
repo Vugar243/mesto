@@ -37,8 +37,8 @@ function handleFormSumbitEditProfile(evt) {
 profileForm.addEventListener("submit", handleFormSumbitEditProfile);
 // редактирование профиля
 initialCards.forEach((item) => {
-  const card = new Card(item.name, item.link, item.alt);
-  const cardElement = card.generateCard();
+  const card = new Card(item, '.element-template');
+  const cardElement = card.createCard();
 
   // Добавляем в DOM
   elementsList.append(cardElement);
@@ -50,20 +50,21 @@ function handleFormSumbitAddingCard(evt) {
   const inputTitleValue = inputTitle.value;
   const inputLinkValue = inputLink.value;
 
-  const newCard = new Card(inputTitleValue, inputLinkValue);
-  const cardElement = newCard.generateCard();
+  const newCard = new Card({ name: inputTitleValue, link: inputLinkValue, alt: inputTitleValue }, '.element-template');
+  const cardElement = newCard.createCard();
 
   elementsList.prepend(cardElement);
 
-  // После добавления карточки на страницу, делаем кнопку неактивной
-  evt.submitter.setAttribute('disabled', '');
+  validators[cardForm.getAttribute('name')]._toggleButtonState();
   evt.submitter.classList.add('popup__button_inactive');
 
   cardForm.reset();
   closePopup(addingCard);
 }
+
 cardForm.addEventListener("submit", handleFormSumbitAddingCard);
 //функция добоваления карточек
+const validators = {};
 const formList = Array.from(document.querySelectorAll('.popup__form'));
 formList.forEach((formElement) => {
   const formValidator = new FormValidator(formElement, {
@@ -72,20 +73,17 @@ formList.forEach((formElement) => {
     submitButtonSelector: '.popup__form-submit',
     inactiveButtonClass: 'popup__button_inactive',
     inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__input-error_active'
+    errorClass: 'popup__input-error_active',
   });
   formValidator.enableValidation();
+  validators[formElement.getAttribute('name')] = formValidator;
 });
-
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup_opened')) {
-          closePopup(popup)
-      }
-      if (evt.target.classList.contains('popup__close-button')) {
-        closePopup(popup)
-      }
-  })
+    if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close-button')) {
+      closePopup(popup);
+    }
+  });
 });
 //Закрытие попапа кликом на оверлей
 // закрытие popup редактирования 
