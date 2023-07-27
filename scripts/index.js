@@ -55,7 +55,7 @@ function handleFormSumbitAddingCard(evt) {
 
   elementsList.prepend(cardElement);
 
-  validators[cardForm.getAttribute('name')]._toggleButtonState();
+  validators[cardForm.getAttribute('name')].toggleButtonState();
   evt.submitter.classList.add('popup__button_inactive');
 
   cardForm.reset();
