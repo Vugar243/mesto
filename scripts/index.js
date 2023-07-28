@@ -36,11 +36,12 @@ function handleFormSumbitEditProfile(evt) {
 }
 profileForm.addEventListener("submit", handleFormSumbitEditProfile);
 // редактирование профиля
+const createCard = data => {
+  const card = new Card(data, '.element-template');
+ return card.createCard();
+}
 initialCards.forEach((item) => {
-  const card = new Card(item, '.element-template');
-  const cardElement = card.createCard();
-
-  // Добавляем в DOM
+  const cardElement = createCard(item);
   elementsList.append(cardElement);
 });
 //функция добавления карточек из масива
@@ -50,15 +51,15 @@ function handleFormSumbitAddingCard(evt) {
   const inputTitleValue = inputTitle.value;
   const inputLinkValue = inputLink.value;
 
+  
   const newCard = new Card({ name: inputTitleValue, link: inputLinkValue, alt: inputTitleValue }, '.element-template');
   const cardElement = newCard.createCard();
 
   elementsList.prepend(cardElement);
+  cardForm.reset();
 
   validators[cardForm.getAttribute('name')].toggleButtonState();
-  evt.submitter.classList.add('popup__button_inactive');
 
-  cardForm.reset();
   closePopup(addingCard);
 }
 
