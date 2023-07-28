@@ -51,11 +51,9 @@ function handleFormSumbitAddingCard(evt) {
   const inputTitleValue = inputTitle.value;
   const inputLinkValue = inputLink.value;
 
+  const newCardElement = createCard({ name: inputTitleValue, link: inputLinkValue, alt: inputTitleValue })
+  elementsList.prepend(newCardElement);
   
-  const newCard = new Card({ name: inputTitleValue, link: inputLinkValue, alt: inputTitleValue }, '.element-template');
-  const cardElement = newCard.createCard();
-
-  elementsList.prepend(cardElement);
   cardForm.reset();
 
   validators[cardForm.getAttribute('name')].toggleButtonState();
