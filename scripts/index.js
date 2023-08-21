@@ -1,17 +1,17 @@
-import '../pages/index.css';
-import { Card } from './card.js';
+//import '../pages/index.css';
+import { Card } from './Card.js';
 import { initialCards, editButton, infoTitle, infoSubtitle, inputName, 
   inputDescription, profileAddButton, addingCard, editProfile, profileForm, 
   cardForm, popups, inputTitle, inputLink, popupImage } from './constants.js';
-import { FormValidator } from './formvalidator.js';
-import { Section } from './section.js';
-import { Popup } from './popup.js';
-import { PopupWithImage } from './popupWithImage.js';
-import { PopupWithForm } from './popupWithForm.js';
-import { UserInfo } from './userInfo.js';
-const editProfilePopup = new Popup(editProfile);
+import { FormValidator } from './Formvalidator.js';
+import { Section } from './Section.js';
+import { Popup } from './Popup.js';
+import { PopupWithImage } from './PopupWithImage.js';
+import { PopupWithForm } from './PopupWithForm.js';
+import { UserInfo } from './UserInfo.js';
+const editProfilePopup = new Popup('.popup_edit-profile');
 // Создание экземпляра класса Popup
-const userInfo = new UserInfo({ nameSelector: infoTitle, aboutSelector: infoSubtitle });
+const userInfo = new UserInfo({ nameSelector: '.profile-info__title', aboutSelector: '.profile-info__subtitle' });
 // Создание экземпляра класса UserInfo
 function openPopupEditProfile() {
   const currentUserInfo = userInfo.getUserInfo();
@@ -22,27 +22,24 @@ function openPopupEditProfile() {
 // открытие popup редактирования
 editButton.addEventListener('click', openPopupEditProfile);
 // Добавление обработчика клика на кнопку редактирования
-const popupWithForm = new PopupWithForm(editProfile, submitCallback);
-function submitCallback() {
+const editProfileFormPopup = new PopupWithForm('.popup_edit-profile');
 
-}
-
-
-function handleFormSumbitEditProfile(evt) {
-  evt.preventDefault();
-  const formData = {
-    name: inputName.value,
-    about: inputDescription.value
-  };
+function handleFormSumbitEditProfile(formData) {
   userInfo.setUserInfo(formData);
-  popupWithForm.setEventListeners();
-  editProfilePopup.close();
+  editProfileFormPopup.close();
 }
-profileForm.addEventListener("submit", handleFormSumbitEditProfile);
+
+function handleFormSubmit(evt) {
+  evt.preventDefault();
+  const formData = editProfileFormPopup._getInputValues();
+  handleFormSumbitEditProfile(formData);
+}
+
+profileForm.addEventListener("submit", handleFormSubmit);
 // Добавление обработчика сабмита на форму редактирования профиля
 
 function handleCardClick(name, link, alt) {
-  const popupWithImage = new PopupWithImage(popupImage);
+  const popupWithImage = new PopupWithImage('.popup-image');
   popupWithImage.open(link, name, alt);
 }
 // функция открытия popup фото
@@ -59,7 +56,7 @@ const section = new Section({
 section.renderItems();
 //функция добавления карточек из масива
 
-const popupAddingCard = new Popup(addingCard);
+const popupAddingCard = new Popup('.popup_adding-card');
 
 function openPopupAddingCard() {
   popupAddingCard.open();
@@ -103,8 +100,8 @@ formList.forEach((formElement) => {
   formValidator.enableValidation();
   validators[formElement.getAttribute('name')] = formValidator;
 });
-popups.forEach((popup) => {
-  const popupInstance = new Popup(popup);
+popups.forEach(() => {
+  const popupInstance = new Popup('.popup');
   popupInstance.setEventListeners();
 });
 //Закрытие попапа кликом на оверлей
