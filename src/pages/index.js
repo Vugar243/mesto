@@ -1,14 +1,12 @@
-import '../pages/index.css';
-import { Card } from './Card.js';
-import { initialCards, editButton, infoTitle, infoSubtitle, inputName, 
-  inputDescription, profileAddButton, addingCard, editProfile, profileForm, 
-  cardForm, popups, inputTitle, inputLink, popupImage } from './constants.js';
-import { FormValidator } from './Formvalidator.js';
-import { Section } from './Section.js';
-import { Popup } from './Popup.js';
-import { PopupWithImage } from './PopupWithImage.js';
-import { PopupWithForm } from './PopupWithForm.js';
-import { UserInfo } from './UserInfo.js';
+import './index.css';
+import { Card } from '../components/Card.js';
+import { initialCards, editButton, inputName, inputDescription, profileAddButton, cardForm, } from '../components/constants.js';
+import { FormValidator } from '../components/Formvalidator.js';
+import { Section } from '../components/Section.js';
+import { Popup } from '../components/Popup.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js';
 const editProfilePopup = new Popup('.popup_edit-profile');
 // Создание экземпляра класса Popup
 const userInfo = new UserInfo({ nameSelector: '.profile-info__title', aboutSelector: '.profile-info__subtitle' });
@@ -24,14 +22,13 @@ editButton.addEventListener('click', openPopupEditProfile);
 // Добавление обработчика клика на кнопку редактирования
 const editProfileFormPopup = new PopupWithForm('.popup_edit-profile', handleFormSubmit);
 editProfileFormPopup.setEventListeners();
-function handleFormSubmit() {
-  const formData = editProfileFormPopup._getInputValues();
+function handleFormSubmit(formData) {
   userInfo.setUserInfo(formData);
   editProfileFormPopup.close();
 }
 
 const openPopupWithImage = new PopupWithImage('.popup-image');
-
+openPopupWithImage.setEventListeners();
 function handleCardClick(name, link, alt) {
   openPopupWithImage.open(link, name, alt);
 }
@@ -62,19 +59,17 @@ function openPopupAddingCard() {
 }
 profileAddButton.addEventListener('click', openPopupAddingCard);
 // открытие popup добавления карточек
-function handleFormSumbitAddingCard() {
-  const formData = popupAddingCard._getInputValues();
+function handleFormSumbitAddingCard(formData) {
 
   // Создаем экземпляр карточки с новыми данными
   const newCardElement = createCard(formData);
 
   // Добавляем карточку в секцию и отрисовываем ее
   section.addItem(newCardElement);
-
-  cardForm.reset();
-  validators[cardForm.getAttribute('name')].toggleButtonState();
-
+  
   popupAddingCard.close();
+
+  validators[cardForm.getAttribute('name')].toggleButtonState();
 }
 //функция добоваления карточек
 
@@ -93,10 +88,3 @@ formList.forEach((formElement) => {
   formValidator.enableValidation();
   validators[formElement.getAttribute('name')] = formValidator;
 });
-popups.forEach(() => {
-  openPopupWithImage.setEventListeners();
-});
-//Закрытие попапа кликом на оверлей
-// закрытие popup редактирования 
-// закрытие popup добавления карточек
-//закрытие popup фото
