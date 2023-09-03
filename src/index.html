@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <!-- <link rel="stylesheet" href="./pages/index.css"> -->
+  <link rel="stylesheet" href="./pages/index.css"><!--  -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Место</title>
 </head>
@@ -14,10 +14,11 @@
     <main class="content">
       <section class="profile">
         <div class="profile-container">
-          <img class="profile-container__avatar" src="<%=require('./images/image.jpg')%>" alt="Жак-Ив Кусто"> <!-- <%=require('./images/image.jpg')%> -->
+          <img class="profile-container__avatar" src="">
+          <button class="profile-container__edit-button" type="button"></button>
           <div class="profile-info">
-            <h1 class="profile-info__title">Жак-Ив Кусто</h1>
-            <p class="profile-info__subtitle">Исследователь океана</p>
+            <h1 class="profile-info__title"></h1>
+            <p class="profile-info__subtitle"></p>
             <button class="profile-info__edit-button" type="button"></button>
           </div>
         </div>
@@ -68,11 +69,31 @@
       </form>
     </div>
   </div>
+  <div class="popup popup_edit-avatar">
+    <div class="popup__container">
+      <button type="button" class="popup__close-button popup__close-button_adding-card"></button>
+      <form class="popup__form popup__form_card-form" name="card-form" novalidate>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <input id="link-input" class="popup__input popup__input_type_link" type="url" name="avatar" placeholder="Ссылка на аватар" required>
+        <span class="popup__input-error link-input-error"></span>
+        <button disabled type="submit" class="popup__save-button popup__form-submit popup__save-button-submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
   <div class="popup popup-image">
     <button type="button" class="popup__close-button popup__image-close-button"></button>
     <img class="popup__image-image" src=" " alt=" ">
     <h2 class="popup__image-title"></h2>
   </div>
-  <!-- <script type="module" src="./pages/index.js"></script> -->
+  <div class="popup popup_delete-confirm">
+    <div class="popup__container">
+      <button type="button" class="popup__close-button popup__close-button_adding-card"></button>
+      <form class="popup__form popup__form_card-form" name="card-form" novalidate>
+        <h2 class="popup__title">Вы уверены?</h2>
+        <button disabled type="submit" class="popup__save-button popup__form-submit popup__save-button-submit popup__confirm-button" data-card-id="уникальный_идентификатор_карточки">Да</button>
+      </form>
+    </div>
+  </div>
+  <script type="module" src="./pages/index.js"></script><!--  -->
 </body>
 </html>
