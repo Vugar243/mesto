@@ -145,7 +145,8 @@ function handleFormSumbitAddingCard(formData) {
     .finally(() => {
       saveButtonAddingCard.textContent = 'Создать';
       popupAddingCard.close();
-      validators[cardForm.getAttribute('name')].toggleButtonState();
+      saveButtonAddingCard.classList.add('popup__button_inactive');
+      saveButtonAddingCard.setAttribute('disabled', '');
     });
 }
 const validators = {};
