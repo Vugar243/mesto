@@ -59,6 +59,31 @@ export class Api {
       .then(this._checkResponse)
       .catch(err => Promise.reject(`Ошибка при обновлении информации о пользователе: ${err}`));
   }
+  deleteCard(cardId) {
+    return fetch(`${this.baseUrl}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: this.headers,
+    })
+      .then(this._checkResponse)
+      .catch(err => Promise.reject(`Ошибка при удалении карточки: ${err}`));
+  }
+  likeCard(cardId) {
+    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: this.headers,
+    })
+      .then(this._checkResponse)
+      .catch(err => Promise.reject(`Ошибка при постановке лайка: ${err}`));
+  }
+
+  dislikeCard(cardId) {
+    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+      method: 'DELETE',
+      headers: this.headers,
+    })
+      .then(this._checkResponse)
+      .catch(err => Promise.reject(`Ошибка при снятии лайка: ${err}`));
+  }
 }
 
 

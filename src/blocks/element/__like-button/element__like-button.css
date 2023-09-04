@@ -6,7 +6,6 @@
   min-width: 22px;
   min-height: 19px;
   background-repeat: no-repeat;
-  margin: 2px 5px 0 0;
 }
 .element__like-button:hover {
   opacity: 0.5;

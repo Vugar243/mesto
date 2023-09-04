@@ -27,12 +27,15 @@
       <section class="section-elements">
         <ul class="elements">
           <template class="element-template">
-            <li class="element">
+            <li class="element" id="">
               <button class="element__delete"></button>
               <img class="element__image" src=" ">
               <div class="element__container">
                 <h2 class="element__title"></h2>
-                <button class="element__like-button" type="button"></button>
+                <div>
+                  <button class="element__like-button" type="button"></button>
+                  <p class="element__likes-count"></p>
+                </div>
               </div>
             </li>
           </template>
@@ -52,7 +55,7 @@
         <span class="popup__input-error name-input-error"></span>
         <input id="job-input" class="popup__input popup__input_type_description" type="text" name="about" placeholder="Введите род деятельности" minlength="2" maxlength="200" required>
         <span class="popup__input-error job-input-error"></span>
-        <button disabled type="submit" class="popup__save-button popup__form-submit">Сохранить</button>
+        <button disabled type="submit" class="popup__save-button popup__form-submit popup__save-button_profile">Сохранить</button>
       </form>
     </div>
   </div>
@@ -65,7 +68,7 @@
         <span class="popup__input-error photo-input-error"></span>
         <input id="link-input" class="popup__input popup__input_type_link" type="url" name="link" placeholder="Ссылка на картинку" required>
         <span class="popup__input-error link-input-error"></span>
-        <button disabled type="submit" class="popup__save-button popup__form-submit popup__save-button-submit">Создать</button>
+        <button disabled type="submit" class="popup__save-button popup__form-submit popup__save-button-submit popup__save-button_adding-card">Создать</button>
       </form>
     </div>
   </div>
@@ -76,7 +79,7 @@
         <h2 class="popup__title">Обновить аватар</h2>
         <input id="link-input" class="popup__input popup__input_type_link" type="url" name="avatar" placeholder="Ссылка на аватар" required>
         <span class="popup__input-error link-input-error"></span>
-        <button disabled type="submit" class="popup__save-button popup__form-submit popup__save-button-submit">Сохранить</button>
+        <button disabled type="submit" class="popup__save-button popup__form-submit popup__save-button-submit popup__save-button_edit-avatar">Сохранить</button>
       </form>
     </div>
   </div>

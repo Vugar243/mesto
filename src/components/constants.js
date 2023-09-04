@@ -1,9 +1,9 @@
 export const editButtonProfile = document.querySelector('.profile-info__edit-button');
+export const saveButtonProfile = document.querySelector('.popup__save-button_profile');
+export const saveButtonAddingCard = document.querySelector('.popup__save-button_adding-card');
+export const saveButtonEditAvatar = document.querySelector('.popup__save-button_edit-avatar');
 export const inputName = document.querySelector('.popup__input_type_name');
 export const inputDescription = document.querySelector('.popup__input_type_description');
 export const profileAddButton = document.querySelector('.profile__add-button');
 export const cardForm = document.querySelector('.popup__form_card-form');
 export const editButtonAvatar = document.querySelector('.profile-container__avatar');
-const template = document.querySelector('.element-template');
-const templateContent = template.content;
-export const deleteButtonCard = templateContent.querySelector('.element__delete');
