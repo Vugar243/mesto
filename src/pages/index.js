@@ -20,14 +20,8 @@ const api = new Api({
 });
 const editProfilePopup = new Popup('.popup_edit-profile');
 // Создание экземпляра класса Popup
-const userInfo = new UserInfo({ nameSelector: '.profile-info__title', aboutSelector: '.profile-info__subtitle' });
-api.getUserInfo()
-  .then((userData) => {
-    const { name, about, avatar, _id } = userData;
-    userInfo.setUserInfo({ name, about });
-    editButtonAvatar.src = avatar;
-    currentUserId = _id;
-  })
+const userInfo = new UserInfo({ nameSelector: '.profile-info__title', aboutSelector: '.profile-info__subtitle', avatarSelector: '.profile-container__avatar' });
+
 // Создание экземпляра класса UserInfo
 function openPopupEditProfile() {
   const currentUserInfo = userInfo.getUserInfo();
@@ -46,10 +40,13 @@ function handleFormSubmitEditProfile(formData) {
   api.updateUserInfo(formData)
     .then((updatedData) => {
       userInfo.setUserInfo(updatedData);
+      editProfileFormPopup.close();
+    })
+    .catch((error) => {
+      console.error(`Ошибка при обновлении данных пользователя: ${error}`);
     })
     .finally(() => {
       saveButtonProfile.textContent = 'Сохранить';
-      editProfileFormPopup.close();
     });
 }
 const openPopupWithImage = new PopupWithImage('.popup-image');
@@ -64,6 +61,7 @@ popupAddingCard.setEventListeners();
 
 function openPopupAddingCard() {
   popupAddingCard.open();
+  validators[cardForm.getAttribute('name')].forceButtonState(saveButtonAddingCard);
 }
 profileAddButton.addEventListener('click', openPopupAddingCard);
 
@@ -72,24 +70,30 @@ popupEditAvatar.setEventListeners();
 
 function openPopupEditAvatar() {
   popupEditAvatar.open();
+  validators[cardForm.getAttribute('name')].forceButtonState(saveButtonEditAvatar);
 }
 editButtonAvatar.addEventListener('click', openPopupEditAvatar);
 
 function handleFormSumbitEditAvatar(formData) {
   saveButtonEditAvatar.textContent = 'Сохранение...';
   api.updateAvatar(formData)
-  .finally(() => {
-    saveButtonEditAvatar.textContent = 'Сохранить';
-    popupEditAvatar.close();
-  });
-  const { avatar } = formData;
-  editButtonAvatar.src = avatar;
+    .then(() => {
+      const { avatar } = formData;
+      editButtonAvatar.src = avatar;
+      popupEditAvatar.close();
+    })
+    .catch((error) => {
+      console.error(`Ошибка при обновлении аватара пользователя: ${error}`);
+    })
+    .finally(() => {
+      saveButtonEditAvatar.textContent = 'Сохранить';
+    });
 }
 const popupConfirm = new PopupConfirmDelete('.popup_delete-confirm', handleFormSubmitConfirmDelete);
 popupConfirm.setEventListeners();
 
 
-//let id;
+
 function openPopupConfirm(_id) {
   popupConfirm.open(_id);
   id = _id;
@@ -97,27 +101,43 @@ function openPopupConfirm(_id) {
 
 function handleFormSubmitConfirmDelete() {
   const cardToRemove = document.getElementById(id);
-  api.deleteCard(id);
-  cardToRemove.remove();
-  }
+  api.deleteCard(id)
+    .then(() => {
+      cardToRemove.remove();
+      popupConfirm.close();
+    })
+    .catch((error) => {
+      console.error(`Ошибка при удалении карточки: ${error}`);
+    });
+}
 
-  function handlelikeCard(cardId) {
-    const cardToLike = document.getElementById(cardId);
-    const likesCountElement = cardToLike.querySelector('.element__likes-count');
-    const currentLikesCount = parseInt(likesCountElement.textContent);
-    const newLikesCount = currentLikesCount + 1;
-    likesCountElement.textContent = newLikesCount;
-    api.likeCard(cardId);
-  }
+function handlelikeCard(cardId) {
+  api.likeCard(cardId)
+    .then((res) => {
+      const cardToLike = document.getElementById(cardId);
+      const likesCountElement = cardToLike.querySelector('.element__likes-count');
+      likesCountElement.textContent = res.likes.length;
+      const likeButton = cardToLike.querySelector('.element__like-button');
+      likeButton.classList.add('element__like-button_active');
+    })
+    .catch((error) => {
+      console.error(`Ошибка при лайке карточки: ${error}`);
+    });
+}
   
-  function handledislikeCard(cardId) {
-    api.dislikeCard(cardId);
-    const cardToLike = document.getElementById(cardId);
-    const likesCountElement = cardToLike.querySelector('.element__likes-count');
-    const currentLikesCount = parseInt(likesCountElement.textContent);
-    const newLikesCount = currentLikesCount - 1;
-    likesCountElement.textContent = newLikesCount;
-  }
+function handledislikeCard(cardId) {
+  api.dislikeCard(cardId)
+    .then((res) => {
+      const cardToDislike = document.getElementById(cardId);
+      const likesCountElement = cardToDislike.querySelector('.element__likes-count');
+      likesCountElement.textContent = res.likes.length;
+      const likeButton = cardToDislike.querySelector('.element__like-button');
+      likeButton.classList.remove('element__like-button_active');
+    })
+    .catch((error) => {
+      console.error(`Ошибка при дизлайке карточки: ${error}`);
+    });
+}
 const createCard = (item) => {
   const card = new Card(item, '.element-template', handleCardClick, currentUserId, openPopupConfirm, handlelikeCard, handledislikeCard);
   const cardElement = card.createCard();
@@ -130,25 +150,39 @@ const sectionAddCards = new Section({
     sectionAddCards.addItem(cardElement);
   }
 }, '.elements');
-api.getInitialCards()
-  .then((data) => {
-    sectionAddCards.renderItems(data);
+
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, initialCards]) => {
+    // Установка данных пользователя
+    const { name, about, avatar, _id } = userData;
+    userInfo.setUserInfo({ name, about, avatar, _id });
+    editButtonAvatar.src = avatar;
+    currentUserId = _id;
+
+    // Отрисовка карточек
+    sectionAddCards.renderItems(initialCards);
+  })
+  .catch((err) => {
+    // Обработка ошибки
+    console.error(err);
   });
-// Обработчик добавления новой карточки
+
 function handleFormSumbitAddingCard(formData) {
   saveButtonAddingCard.textContent = 'Сохранение...';
   api.addCard(formData)
     .then((newCardData) => {
       const newCardElement = createCard(newCardData);
       sectionAddCards.addItem(newCardElement);
+      popupAddingCard.close();
+    })
+    .catch((error) => {
+      console.error(`Ошибка при добавлении новой карточки: ${error}`);
     })
     .finally(() => {
       saveButtonAddingCard.textContent = 'Создать';
-      popupAddingCard.close();
-      saveButtonAddingCard.classList.add('popup__button_inactive');
-      saveButtonAddingCard.setAttribute('disabled', '');
     });
 }
+// Обработчик добавления новой карточки
 const validators = {};
 const formList = Array.from(document.querySelectorAll('.popup__form'));
 formList.forEach((formElement) => {

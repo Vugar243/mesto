@@ -15,14 +15,12 @@ export class Api {
       headers: this.headers
     })
       .then(this._checkResponse)
-      .catch(err => Promise.reject(`Ошибка при получении карточек: ${err}`));
   }
   getUserInfo() {
     return fetch(`${this.baseUrl}/users/me`, {
       headers: this.headers
     })
       .then(this._checkResponse)
-      .catch(err => Promise.reject(`Ошибка при получении информации о пользователе: ${err}`));
   }
   updateUserInfo({ name, about }) {
     return fetch(`${this.baseUrl}/users/me`, {
@@ -34,7 +32,6 @@ export class Api {
       })
     })
       .then(this._checkResponse)
-      .catch(err => Promise.reject(`Ошибка при обновлении информации о пользователе: ${err}`));
   }
   addCard({ name, link }) {
     return fetch(`${this.baseUrl}/cards`, {
@@ -46,7 +43,6 @@ export class Api {
       })
     })
       .then(this._checkResponse)
-      .catch(err => Promise.reject(`Ошибка при добавлении карточки: ${err}`));
   }
   updateAvatar({ avatar }) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
@@ -57,7 +53,6 @@ export class Api {
       })
     })
       .then(this._checkResponse)
-      .catch(err => Promise.reject(`Ошибка при обновлении информации о пользователе: ${err}`));
   }
   deleteCard(cardId) {
     return fetch(`${this.baseUrl}/cards/${cardId}`, {
@@ -65,7 +60,6 @@ export class Api {
       headers: this.headers,
     })
       .then(this._checkResponse)
-      .catch(err => Promise.reject(`Ошибка при удалении карточки: ${err}`));
   }
   likeCard(cardId) {
     return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
@@ -73,7 +67,6 @@ export class Api {
       headers: this.headers,
     })
       .then(this._checkResponse)
-      .catch(err => Promise.reject(`Ошибка при постановке лайка: ${err}`));
   }
 
   dislikeCard(cardId) {
@@ -82,7 +75,6 @@ export class Api {
       headers: this.headers,
     })
       .then(this._checkResponse)
-      .catch(err => Promise.reject(`Ошибка при снятии лайка: ${err}`));
   }
 }
 

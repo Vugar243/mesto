@@ -52,14 +52,10 @@ export class Card {
 
   _toggleLike() {
     if (this._isLiked) {
-      this._likeButton.classList.toggle('element__like-button_active');
       this._isLiked = !this._isLiked;
-      // Если лайк уже поставлен, снимаем его
       this._dislike(); // Дождитесь, пока _dislike завершится
     } else {
-      this._likeButton.classList.toggle('element__like-button_active');
       this._isLiked = !this._isLiked;
-      // Если лайк не поставлен, ставим его
       this._like(); // Дождитесь, пока _like завершится
     }
   }
