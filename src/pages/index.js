@@ -1,4 +1,4 @@
-//import './index.css';
+import './index.css';
 let id;
 let currentUserId;
 import { Card } from '../components/Card.js';
