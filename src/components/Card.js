@@ -1,5 +1,5 @@
 export class Card {
-  constructor({ name, link, alt, owner, _id, likes }, templateSelector, handleCardClick, currentUserId, openPopupFunction, likeCard, dislikeCard) {
+  constructor({ name, link, alt, owner, _id, likes }, templateSelector, handleCardClick, currentUserId, openPopupFunction, api) {
     this._name = name;
     this._link = link;
     this._alt = alt;
@@ -10,9 +10,8 @@ export class Card {
     this._isOwner = (owner._id === currentUserId);
     this._id = _id;
     this._openPopupFunction = openPopupFunction;
-    this._likeCard = likeCard;
-    this._dislikeCard = dislikeCard;
     this._isLiked = likes.some(like => like._id === currentUserId);
+    this._api = api;
 
     this._elementImage = this._element.querySelector('.element__image');
     this._elementTitle = this._element.querySelector('.element__title');
@@ -40,11 +39,25 @@ export class Card {
     }
   }
   _like() {
-    this._likeCard(this._id);
+    this._api.likeCard(this._id)
+      .then((res) => {
+        this._likesCount.textContent = res.likes.length;
+        this._likeButton.classList.add('element__like-button_active');
+      })
+      .catch((error) => {
+        console.error(`Ошибка при лайке карточки: ${error}`);
+      });
   }
 
   _dislike() {
-    this._dislikeCard(this._id);
+    this._api.dislikeCard(this._id)
+      .then((res) => {
+        this._likesCount.textContent = res.likes.length;
+        this._likeButton.classList.remove('element__like-button_active');
+      })
+      .catch((error) => {
+        console.error(`Ошибка при дизлайке карточки: ${error}`);
+      });
   }
 
   

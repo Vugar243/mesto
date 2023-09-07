@@ -1,4 +1,4 @@
-import './index.css';
+//import './index.css';
 let id;
 let currentUserId;
 import { Card } from '../components/Card.js';
@@ -6,7 +6,6 @@ import { Api } from '../components/Api.js';
 import { saveButtonEditAvatar, saveButtonAddingCard, saveButtonProfile, editButtonProfile, inputName, inputDescription, profileAddButton, cardForm, editButtonAvatar } from '../components/constants.js';
 import { FormValidator } from '../components/Formvalidator.js';
 import { Section } from '../components/Section.js';
-import { Popup } from '../components/Popup.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupConfirmDelete } from '../components/PopupConfirmDelete.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
@@ -18,7 +17,6 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
-const editProfilePopup = new Popup('.popup_edit-profile');
 // Создание экземпляра класса Popup
 const userInfo = new UserInfo({ nameSelector: '.profile-info__title', aboutSelector: '.profile-info__subtitle', avatarSelector: '.profile-container__avatar' });
 
@@ -27,7 +25,7 @@ function openPopupEditProfile() {
   const currentUserInfo = userInfo.getUserInfo();
   inputName.value = currentUserInfo.name;
   inputDescription.value = currentUserInfo.about;
-  editProfilePopup.open();
+  editProfileFormPopup.open();
 }
 // открытие popup редактирования
 editButtonProfile.addEventListener('click', openPopupEditProfile);
@@ -77,9 +75,8 @@ editButtonAvatar.addEventListener('click', openPopupEditAvatar);
 function handleFormSumbitEditAvatar(formData) {
   saveButtonEditAvatar.textContent = 'Сохранение...';
   api.updateAvatar(formData)
-    .then(() => {
-      const { avatar } = formData;
-      editButtonAvatar.src = avatar;
+    .then((updatedData) => {
+      userInfo.setUserInfo(updatedData);
       popupEditAvatar.close();
     })
     .catch((error) => {
@@ -111,35 +108,8 @@ function handleFormSubmitConfirmDelete() {
     });
 }
 
-function handlelikeCard(cardId) {
-  api.likeCard(cardId)
-    .then((res) => {
-      const cardToLike = document.getElementById(cardId);
-      const likesCountElement = cardToLike.querySelector('.element__likes-count');
-      likesCountElement.textContent = res.likes.length;
-      const likeButton = cardToLike.querySelector('.element__like-button');
-      likeButton.classList.add('element__like-button_active');
-    })
-    .catch((error) => {
-      console.error(`Ошибка при лайке карточки: ${error}`);
-    });
-}
-  
-function handledislikeCard(cardId) {
-  api.dislikeCard(cardId)
-    .then((res) => {
-      const cardToDislike = document.getElementById(cardId);
-      const likesCountElement = cardToDislike.querySelector('.element__likes-count');
-      likesCountElement.textContent = res.likes.length;
-      const likeButton = cardToDislike.querySelector('.element__like-button');
-      likeButton.classList.remove('element__like-button_active');
-    })
-    .catch((error) => {
-      console.error(`Ошибка при дизлайке карточки: ${error}`);
-    });
-}
 const createCard = (item) => {
-  const card = new Card(item, '.element-template', handleCardClick, currentUserId, openPopupConfirm, handlelikeCard, handledislikeCard);
+  const card = new Card(item, '.element-template', handleCardClick, currentUserId, openPopupConfirm, api);
   const cardElement = card.createCard();
   return cardElement;
 };
@@ -156,7 +126,6 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     // Установка данных пользователя
     const { name, about, avatar, _id } = userData;
     userInfo.setUserInfo({ name, about, avatar, _id });
-    editButtonAvatar.src = avatar;
     currentUserId = _id;
 
     // Отрисовка карточек
